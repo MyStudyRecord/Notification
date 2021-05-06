@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.databinding.DataBindingUtil
+import com.what.notifications.ActionButtons83.DetailsActivity
+import com.what.notifications.ActionButtons83.SettingsActivity
 import com.what.notifications.R
 import com.what.notifications.Tapaction82.MainActivity_82
 import com.what.notifications.databinding.ActivityMain80Binding
@@ -52,6 +54,40 @@ class MainActivity_80 : AppCompatActivity() {
         )
 
 
+
+        //action button 1 ----------------------------------------------------------------
+        val intent2Intent =  Intent(this, DetailsActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent2: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intent2Intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val action2 : NotificationCompat.Action =
+            NotificationCompat.Action.Builder(0,"Details",pendingIntent2).build()
+
+        //action button 2 ----------------------------------------------------------------
+        val intent3Intent =  Intent(this, SettingsActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent3: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intent3Intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val action3 : NotificationCompat.Action =
+            NotificationCompat.Action.Builder(0,"Settings",pendingIntent3).build()
+
+
+
+
+
+
+
+
         val notification = NotificationCompat.Builder(this@MainActivity_80, channelID)
             .setContentTitle("Demo Title")
             .setContentText("This is a semo notification")
@@ -59,6 +95,8 @@ class MainActivity_80 : AppCompatActivity() {
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
+            .addAction(action2)
+            .addAction(action3)
             .build()
         notificationManager?.notify(notificationId, notification)
     }
