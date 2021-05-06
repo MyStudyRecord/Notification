@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
 import androidx.databinding.DataBindingUtil
 import com.what.notifications.ActionButtons83.DetailsActivity
 import com.what.notifications.ActionButtons83.SettingsActivity
@@ -21,6 +22,8 @@ class MainActivity_80 : AppCompatActivity() {
     private val channelID = "com.what.notifications.SimpleNotificationExample80.channel1"
     //알림 관리자 인스턴스 정의(알림 채널과 알림 인스턴스를 만드는데 필요)
     private var notificationManager:NotificationManager? = null
+    private val KEY_REPLY = "key_reply"
+
     lateinit var binding:ActivityMain80Binding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +56,19 @@ class MainActivity_80 : AppCompatActivity() {
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
+
+        //reply action
+        val remoteInput : RemoteInput = RemoteInput.Builder(KEY_REPLY).run {
+            setLabel("Insert you name here")
+            build()
+        }
+
+        val replyAction : NotificationCompat.Action = NotificationCompat.Action.Builder(
+            0,
+            "REPLY",
+            pendingIntent
+        ).addRemoteInput(remoteInput)
+            .build()
 
 
         //action button 1 ----------------------------------------------------------------
@@ -94,7 +110,8 @@ class MainActivity_80 : AppCompatActivity() {
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent)
+//            .setContentIntent(pendingIntent)
+            .addAction(replyAction)
             .addAction(action2)
             .addAction(action3)
             .build()
