@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SimpleNotificationExample80.MainActivity_80">
+        tools:context=".SimpleNotificationExample81.MainActivity_80">
 
         <Button
             android:id="@+id/button"

@@ -1,14 +1,17 @@
-package com.what.notifications.SimpleNotificationExample80
+package com.what.notifications.SimpleNotificationExample81
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.databinding.DataBindingUtil
 import com.what.notifications.R
+import com.what.notifications.Tapaction82.MainActivity_82
 import com.what.notifications.databinding.ActivityMain80Binding
 
 class MainActivity_80 : AppCompatActivity() {
@@ -36,12 +39,26 @@ class MainActivity_80 : AppCompatActivity() {
 
     private fun displayNotification(){
         val notificationId = 45
+
+        //메세지 아이콘을 눌렀을때 이동
+        val tapResultIntent =  Intent(this, MainActivity_82::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            tapResultIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+
         val notification = NotificationCompat.Builder(this@MainActivity_80, channelID)
             .setContentTitle("Demo Title")
             .setContentText("This is a semo notification")
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
             .build()
         notificationManager?.notify(notificationId, notification)
     }
